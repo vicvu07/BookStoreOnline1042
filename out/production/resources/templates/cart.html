@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="img/fav.png">
+    <!-- Author Meta -->
+    <meta name="author" content="CodePixar">
+    <!-- Meta Description -->
+    <meta name="description" content="">
+    <!-- Meta Keyword -->
+    <meta name="keywords" content="">
+    <!-- meta character set -->
+    <meta charset="UTF-8">
+    <!-- Site Title -->
+    <title>Karma Shop</title>
+
+    <!--
+            CSS
+            ============================================= -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/linearicons.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/themify-icons.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/owl.carousel.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/nice-select.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/nouislider.mincss}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/ion.rangeSlider..css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/ion.rangeSlider.skinFlat.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/magnific-popup.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+</head>
+
+<body>
+
+<!--Header-->
+<div th:replace="fragments/header :: header_info"></div>
+
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Giỏ hàng</h1>
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+
+<!--================Cart Area =================-->
+<section class="cart_area">
+    <div class="container">
+        <div class="cart_inner">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                    <h1 th:if="${vm.getCartQuantity() != 0}" th:text="${'Số sản phẩm: ' + vm.getCartQuantity()}"></h1>
+                    <tr>
+                        <th scope="col">Tên sách</th>
+                        <th scope="col">Giá</th>
+                        <th scope="col">Số lượng</th>
+                        <th scope="col">Tổng tiền</th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="cartBook,iter : ${vm.getCartBookVMS()}">
+                        <td>
+                            <div class="media">
+                                <div class="d-flex">
+                                    <img th:src="${cartBook.getMainImage()}" alt="" height="264" width="208">
+                                </div>
+                                <div class="media-body">
+                                    <p th:text="${cartBook.getBookName()}"></p>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            <h5 th:text="${cartBook.getPrice()}+'.000 VND'"></h5>
+                        </td>
+                        <td>
+                            <div class="product_count">
+                                <input type="number" name="qty" th:value="${cartBook.getAmount()}" title="Số lượng:"
+                                       class="input-text qty form-control change-book-amount "
+                                       th:attr="data-id=${cartBook.getId()}">
+                                <!--<button onclick="var result = document.getElementById('th:text="${cartBook.getId()}"'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
+                                    class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
+                                <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value&#45;&#45;;return false;"
+                                    class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>-->
+
+                            </div>
+
+                        </td>
+                        <td>
+                            <h5 th:text="${cartBook.getPrice()}* ${cartBook.getAmount()} +'.000 VND'"></h5>
+                        </td>
+                        <td colspan="3">
+                            <div><a style="cursor: pointer; color: red" class="delete-cart-book"
+                                    th:attr="data-id=${cartBook.getId()}">Hủy mua</a></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="media">
+                                <h3>Tổng tiền</h3>
+                            </div>
+                        </td>
+
+                        <td>
+
+                        </td>
+                        <td>
+
+
+                        </td>
+                        <td>
+                            <h5 th:text="${vm.getTotalPrice()} +'.000 VND'"></h5>
+                        </td>
+                        <td colspan="3">
+                            <div><a style="cursor: pointer; color: red" class="delete-cart-book"></a></div>
+                        </td>
+                    </tr>
+
+
+                    <tr class="out_button_area">
+                        <td>
+
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+                            <div class="checkout_btn_inner d-flex align-items-center">
+
+                                <a class="primary-btn" th:href="@{'../order/checkout'}" role="button">Kiểm tra</a>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Cart Area =================-->
+
+
+<!--Footer-->
+<div th:replace="fragments/footer :: footer_info"></div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.9.0/sweetalert2.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+<script th:src="@{/js/vendor/jquery-2.2.4.min.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
+        integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+        crossorigin="anonymous"></script>
+<script th:src="@{/js/vendor/bootstrap.min.js}"></script>
+<script th:src="@{/js/jquery.ajaxchimp.min.js}"></script>
+<script th:src="@{/js/jquery.nice-select.min.js}"></script>
+<script th:src="@{/js/jquery.sticky.js}"></script>
+<script th:src="@{/js/nouislider.min.js}"></script>
+<script th:src="@{/js/countdown.js}"></script>
+<script th:src="@{/js/jquery.magnific-popup.min.js}"></script>
+<script th:src="@{/js/owl.carousel.min.js}"></script>
+<script th:src="@{/js/cart.js}"></script>
+<!--gmaps Js-->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
+<script th:src="@{/js/gmaps.min.js}"></script>
+<script th:src="@{/js/main.js}"></script>
+</body>
+
+</html>
